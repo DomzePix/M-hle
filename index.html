@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Mensch ärgere dich nicht – Vollversion</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Mensch ärgere dich nicht</h1>
+  <div class="controls">
+    <label>Spieleranzahl:
+      <select id="player-count">
+        <option value="2">2 Spieler</option>
+        <option value="3">3 Spieler</option>
+        <option value="4">4 Spieler</option>
+      </select>
+    </label>
+    <button onclick="startGame()">Spiel starten</button>
+  </div>
+
+  <div id="board" class="board"></div>
+
+  <div class="dice-container">
+    <button onclick="rollDice()">🎲 Würfeln</button>
+    <div class="dice" id="dice1">⚀</div>
+    <div class="dice" id="dice2">⚀</div>
+    <div id="dice-sum">Summe: -</div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
