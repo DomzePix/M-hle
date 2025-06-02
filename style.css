@@ -1,53 +1,42 @@
 body {
-  font-family: sans-serif;
+  font-family: Arial, sans-serif;
   text-align: center;
-  background: #e9ecef;
+  background: #f0f0f0;
 }
+
 h1 {
-  margin: 20px 0;
-}
-.controls {
-  margin-bottom: 10px;
-}
-.board {
-  display: grid;
-  grid-template-columns: repeat(11, 40px);
-  grid-template-rows: repeat(11, 40px);
-  gap: 2px;
-  margin: 20px auto;
-  width: max-content;
-}
-.cell {
-  width: 40px;
-  height: 40px;
-  background: white;
-  border: 1px solid #aaa;
-  position: relative;
-}
-.home { background: #ccc; }
-.path { background: #eee; }
-.goal { background: #ffd; }
-.piece {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  position: absolute;
-  top: 4px;
-  left: 4px;
-}
-.red { background: red; }
-.green { background: green; }
-.blue { background: blue; }
-.yellow { background: gold; }
-.dice-container {
   margin-top: 20px;
 }
-.dice {
-  display: inline-block;
-  font-size: 48px;
-  margin: 0 10px;
+
+#game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-#dice-sum {
-  font-weight: bold;
-  margin-top: 10px;
+
+#board {
+  position: relative;
+  width: 500px;
+  height: 500px;
+  background: white;
+  border: 2px solid #333;
+  margin-top: 20px;
+}
+
+.point {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: #ddd;
+  border-radius: 50%;
+  border: 2px solid #666;
+  cursor: pointer;
+}
+
+.point.green { background: green; }
+.point.violet { background: violet; }
+
+#status {
+  margin-top: 20px;
+  font-size: 20px;
 }
