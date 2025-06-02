@@ -18,8 +18,10 @@ h1 {
 
 #board {
   position: relative;
-  width: 500px;
-  height: 500px;
+  width: 90vmin;
+  height: 90vmin;
+  max-width: 500px;
+  max-height: 500px;
   background: white;
   border: 2px solid #333;
   margin-top: 20px;
@@ -27,17 +29,18 @@ h1 {
 
 .point {
   position: absolute;
-  width: 30px;
-  height: 30px;
+  width: 6%;
+  height: 6%;
   background: #ddd;
   border-radius: 50%;
   border: 2px solid #666;
   cursor: pointer;
+  transform: translate(-50%, -50%);
   transition: transform 0.2s ease;
 }
 
 .point:hover {
-  transform: scale(1.1);
+  transform: translate(-50%, -50%) scale(1.1);
 }
 
 .point.green {
@@ -50,7 +53,7 @@ h1 {
 
 .line {
   position: absolute;
-  height: 4px;
+  height: 0.8%;
   background: #333;
   transform-origin: left center;
 }
