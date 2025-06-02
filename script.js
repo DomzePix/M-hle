@@ -41,7 +41,32 @@ const moves = {
 };
 
 function drawBoard() {
+  
   board.innerHTML = "";
+
+  // Linien zeichnen
+  const lines = [
+    [0, 1], [1, 2], [3, 4], [4, 5], [6, 7], [7, 8],
+    [15, 16], [16, 17], [18, 19], [19, 20], [21, 22], [22, 23],
+    [0, 9], [9, 21], [3, 10], [10, 18], [6, 11], [11, 15],
+    [1, 4], [4, 7], [16, 19], [8, 12], [12, 17], [5, 13],
+    [13, 20], [2, 14], [14, 23]
+  ];
+
+  lines.forEach(([a, b]) => {
+    const [x1, y1] = points[a];
+    const [x2, y2] = points[b];
+    const line = document.createElement("div");
+    line.classList.add("line");
+    const length = Math.hypot(x2 - x1, y2 - y1);
+    const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
+    line.style.width = `${length}%`;
+    line.style.left = `${x1}%`;
+    line.style.top = `${y1}%`;
+    line.style.transform = `rotate(${angle}deg)`;
+    board.appendChild(line);
+  });
+
 
   points.forEach((pos, index) => {
     const point = document.createElement("div");
@@ -87,6 +112,13 @@ function handleClick(index) {
   }
 
   drawBoard();
+
+// Reset-Knopf einfügen
+const reset = document.createElement("button");
+reset.textContent = "Spiel zurücksetzen";
+reset.onclick = resetGame;
+board.appendChild(reset);
+
   checkPhaseTransition();
 }
 
@@ -100,6 +132,13 @@ function requestRemove(opponent) {
         stonesOnBoard[1 - currentPlayer]--;
         switchTurn();
         drawBoard();
+
+// Reset-Knopf einfügen
+const reset = document.createElement("button");
+reset.textContent = "Spiel zurücksetzen";
+reset.onclick = resetGame;
+board.appendChild(reset);
+
         checkVictory();
       }, { once: true });
     }
@@ -126,7 +165,32 @@ function checkVictory() {
   for (let i = 0; i < 2; i++) {
     if (stonesOnBoard[i] < 3 || !canMove(players[i])) {
       statusText.textContent = `Spieler ${players[1 - i] === "green" ? "Grün" : "Violett"} hat gewonnen!`;
-      board.innerHTML = "";
+      
+  board.innerHTML = "";
+
+  // Linien zeichnen
+  const lines = [
+    [0, 1], [1, 2], [3, 4], [4, 5], [6, 7], [7, 8],
+    [15, 16], [16, 17], [18, 19], [19, 20], [21, 22], [22, 23],
+    [0, 9], [9, 21], [3, 10], [10, 18], [6, 11], [11, 15],
+    [1, 4], [4, 7], [16, 19], [8, 12], [12, 17], [5, 13],
+    [13, 20], [2, 14], [14, 23]
+  ];
+
+  lines.forEach(([a, b]) => {
+    const [x1, y1] = points[a];
+    const [x2, y2] = points[b];
+    const line = document.createElement("div");
+    line.classList.add("line");
+    const length = Math.hypot(x2 - x1, y2 - y1);
+    const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
+    line.style.width = `${length}%`;
+    line.style.left = `${x1}%`;
+    line.style.top = `${y1}%`;
+    line.style.transform = `rotate(${angle}deg)`;
+    board.appendChild(line);
+  });
+
     }
   }
 }
@@ -150,6 +214,20 @@ function resetGame() {
   selected = null;
   statusText.textContent = "Spieler Grün ist am Zug";
   drawBoard();
+
+// Reset-Knopf einfügen
+const reset = document.createElement("button");
+reset.textContent = "Spiel zurücksetzen";
+reset.onclick = resetGame;
+board.appendChild(reset);
+
 }
 
 drawBoard();
+
+// Reset-Knopf einfügen
+const reset = document.createElement("button");
+reset.textContent = "Spiel zurücksetzen";
+reset.onclick = resetGame;
+board.appendChild(reset);
+
