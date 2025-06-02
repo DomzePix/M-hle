@@ -1,69 +1,62 @@
-let board = [];
-let players = [];
+const board = document.getElementById("board");
+const statusText = document.getElementById("status");
+const currentPlayerText = document.getElementById("currentPlayer");
+
+const players = ["green", "violet"];
 let currentPlayer = 0;
+let phase = "placing"; // placing, moving, flying
+let stones = [9, 9]; // restliche zu setzende Steine
+let positions = new Array(24).fill(null); // Positionen auf dem Brett
 
-function createBoard() {
-  const boardDiv = document.getElementById("board");
-  boardDiv.innerHTML = "";
-  board = [];
+// Positionen auf dem klassischen Mühlespielbrett (vereinfachte Darstellung)
+const points = [
+  [0, 0], [250, 0], [500, 0],
+  [50, 50], [250, 50], [450, 50],
+  [100, 100], [250, 100], [400, 100],
+  [0, 250], [100, 250], [400, 250], [500, 250],
+  [100, 400], [250, 400], [400, 400],
+  [50, 450], [250, 450], [450, 450],
+  [0, 500], [250, 500], [500, 500]
+];
 
-  for (let i = 0; i < 121; i++) {
-    const cell = document.createElement("div");
-    cell.classList.add("cell");
-
-    if ([0, 10, 110, 120].includes(i)) {
-      cell.classList.add("home");
-    } else if (i >= 44 && i <= 76 && i % 11 === 5) {
-      cell.classList.add("path");
-    } else {
-      cell.classList.add("goal");
+function drawBoard() {
+  board.innerHTML = "";
+  points.forEach((pos, index) => {
+    const point = document.createElement("div");
+    point.classList.add("point");
+    point.style.left = `${pos[0]}px`;
+    point.style.top = `${pos[1]}px`;
+    if (positions[index] !== null) {
+      point.classList.add(positions[index]);
     }
-
-    cell.id = "cell-" + i;
-    board.push(cell);
-    boardDiv.appendChild(cell);
-  }
-}
-
-function startGame() {
-  const count = parseInt(document.getElementById("player-count").value);
-  players = Array.from({ length: count }, (_, i) => ({
-    id: i,
-    color: ["red", "green", "blue", "yellow"][i],
-    pos: 0,
-    home: 11 * i,
-  }));
-  currentPlayer = 0;
-  createBoard();
-  drawPieces();
-}
-
-function drawPieces() {
-  document.querySelectorAll(".piece").forEach(p => p.remove());
-  players.forEach(p => {
-    const piece = document.createElement("div");
-    piece.className = "piece " + p.color;
-    const pos = p.home + (p.pos % 10);
-    const cell = document.getElementById("cell-" + pos);
-    if (cell) cell.appendChild(piece);
+    point.addEventListener("click", () => handleClick(index));
+    board.appendChild(point);
   });
 }
 
-function rollDice() {
-  const d1 = Math.floor(Math.random() * 6) + 1;
-  const d2 = Math.floor(Math.random() * 6) + 1;
-  document.getElementById("dice1").innerText = getDiceSymbol(d1);
-  document.getElementById("dice2").innerText = getDiceSymbol(d2);
-  document.getElementById("dice-sum").innerText = "Summe: " + (d1 + d2);
-  movePlayer(d1 + d2);
+function handleClick(index) {
+  if (phase === "placing") {
+    if (positions[index] === null && stones[currentPlayer] > 0) {
+      positions[index] = players[currentPlayer];
+      stones[currentPlayer]--;
+      if (checkMill(index)) {
+        // TODO: Mühle gebildet → Gegnerstein entfernen
+        alert("Mühle gebildet! Gegnerstein entfernen.");
+      }
+      switchTurn();
+    }
+  }
+  drawBoard();
 }
 
-function getDiceSymbol(num) {
-  return ["⚀", "⚁", "⚂", "⚃", "⚄", "⚅"][num - 1];
+function switchTurn() {
+  currentPlayer = 1 - currentPlayer;
+  currentPlayerText.textContent = players[currentPlayer] === "green" ? "Grün" : "Violett";
 }
 
-function movePlayer(steps) {
-  players[currentPlayer].pos += steps;
-  drawPieces();
-  currentPlayer = (currentPlayer + 1) % players.length;
+function checkMill(index) {
+  // Platzhalter für Mühlenprüfung
+  return false;
 }
+
+drawBoard();
